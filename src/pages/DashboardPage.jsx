@@ -32,6 +32,9 @@ const DashboardPage = () => {
       } catch {}
     };
     load();
+    const onUpdate = () => load();
+    window.addEventListener('stock-updated', onUpdate);
+    return () => window.removeEventListener('stock-updated', onUpdate);
   }, []);
 
   return (

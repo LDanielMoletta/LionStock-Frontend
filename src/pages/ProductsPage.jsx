@@ -192,8 +192,11 @@ const ProductsPage = () => {
             </div>
             <div>
               <p className="mb-1 text-xs text-slate-400">Valor de venda de uma única unidade do produto.</p>
-              <label className="mb-1 block text-sm font-semibold text-slate-800">Preço Unitário (R$)</label>
-              <input type="number" min="0" step="0.01" placeholder="0.00" value={form.unitPrice} onChange={(e) => setForm((p) => ({ ...p, unitPrice: Number(e.target.value) }))} className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm outline-none focus:border-lion-blue focus:ring-2 focus:ring-lion-blue/10" />
+              <label className="mb-1 block text-sm font-semibold text-slate-800">Preço Unitário</label>
+              <div className="relative">
+                <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-sm text-slate-400">R$</span>
+                <input type="text" inputMode="decimal" placeholder="0,00" value={form.unitPrice ? String(form.unitPrice).replace('.', ',') : ''} onChange={(e) => { const v = e.target.value.replace(/[^0-9,]/g, '').replace(',', '.'); setForm((p) => ({ ...p, unitPrice: v ? Number(v) : 0 })); }} className="w-full rounded-xl border border-slate-200 px-4 py-2.5 pl-10 text-sm outline-none focus:border-lion-blue focus:ring-2 focus:ring-lion-blue/10" />
+              </div>
             </div>
             {formError && <p className="text-sm text-red-500">{formError}</p>}
             <button onClick={handleSave} disabled={saving} className="w-full rounded-xl bg-lion-blue px-4 py-2.5 text-sm font-semibold text-white transition hover:opacity-90 disabled:opacity-50">
